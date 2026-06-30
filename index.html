@@ -131,6 +131,18 @@
   .ov-empty{color:var(--fin);font-weight:500;font-size:.92rem}
   .ov-ok{background:var(--fin-bg);border-color:#c7d4ba;border-left-color:var(--fin)}
   .ov-ok h4{color:var(--fin)}
+  /* módulos do curso */
+  .mod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+  .mod-card{display:block;text-decoration:none;background:var(--white);border:1px solid #e8e0cf;border-radius:12px;padding:18px 20px;box-shadow:0 2px 10px rgba(60,72,53,.04);transition:.15s;border-top:4px solid var(--gold)}
+  .mod-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(60,72,53,.1);border-top-color:var(--sage)}
+  .mod-card.soon{opacity:.62;pointer-events:none;border-top-color:#cfc7b4;background:#f5f1e6}
+  .mod-card .mod-n{font-family:'Jost',sans-serif;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600}
+  .mod-card .mod-t{font-family:'Cormorant Garamond',serif;font-size:1.28rem;color:var(--sage);font-weight:700;line-height:1.15;margin:5px 0 10px}
+  .mod-card .mod-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:.78rem;color:#8a8576}
+  .mod-card .mod-badge{font-size:.68rem;font-weight:600;border-radius:16px;padding:2px 9px;letter-spacing:.04em}
+  .mod-badge.ok{background:var(--fin-bg);color:var(--fin)}
+  .mod-badge.wait{background:#efe7d6;color:#a39b86}
+  .mod-card .mod-open{color:var(--gold);font-weight:600}
   @media(max-width:600px){ .t-actions{opacity:1} .overall-card .big{font-size:2.1rem} }
 </style>
 </head>
@@ -182,6 +194,9 @@
   <div id="board"></div>
   <button class="add-track" id="btnAddTrack">+ Adicionar trilha / tópico</button>
 
+  <h2 style="margin-top:46px"><span class="sub">Roteiros prontos · clique para abrir</span>📚 Conteúdo do Curso</h2>
+  <div id="modulos"></div>
+
   <div class="hint" id="launchHint"></div>
 
   <div class="hint">💡 <b>Fluxo sugerido:</b> um responsável por trilha · check-in toda segunda movendo os status · quem coordena exporta (⬇) e manda no grupo como “foto da semana”. As datas se reajustam sozinhas quando você muda uma duração ou o início do projeto.</div>
@@ -230,6 +245,20 @@ const DEFAULT = {
       ]},
   ]
 };
+
+// Índice dos módulos do curso. Adicione o "file" quando o roteiro for publicado.
+const MODULES=[
+  {n:1, title:'Por que quase todo mundo reganha o peso', aulas:5, file:'modulos/modulo-1.html'},
+  {n:2, title:'Diagnóstico: em que ponto você está', aulas:null, file:null},
+  {n:3, title:'Preservar massa magra durante o uso', aulas:null, file:null},
+  {n:4, title:'Redução de dose (com médico especialista)', aulas:null, file:null},
+  {n:5, title:'Reconstruir a saciedade natural', aulas:null, file:null},
+  {n:6, title:'Mapear os gatilhos de fome emocional', aulas:null, file:null},
+  {n:7, title:'As últimas doses e o dia da suspensão', aulas:null, file:null},
+  {n:8, title:'Sustentar o resultado a longo prazo', aulas:null, file:null},
+  {n:9, title:'Casos especiais', aulas:null, file:null},
+  {n:10, title:'Manutenção contínua para a vida', aulas:null, file:null},
+];
 
 const STATUS={todo:{label:'A fazer',cls:'st-todo'},doing:{label:'Em andamento',cls:'st-doing'},done:{label:'Concluída',cls:'st-done'},blocked:{label:'Travada',cls:'st-blocked'}};
 const CYCLE=['todo','doing','done','blocked'];
@@ -286,6 +315,7 @@ function daysLate(sc){ return Math.round((today0()-sc.end)/86400000); }
 function render(){
   const sched=schedule();
   renderOverdue(sched);
+  renderModules();
   const c=counts(); const pct=c.total?Math.round(c.done/c.total*100):0;
   document.getElementById('ovPct').innerHTML=pct+'<small>%</small>';
   document.getElementById('ovBar').style.width=pct+'%';
@@ -363,6 +393,22 @@ function render(){
   bind();
 }
 
+function renderModules(){
+  const box=document.getElementById('modulos');
+  const done=MODULES.filter(m=>m.file).length;
+  box.innerHTML='<div class="mod-grid">'+MODULES.map(m=>{
+    const ready=!!m.file;
+    const meta=ready
+      ? `<span class="mod-badge ok">Roteiro pronto</span>${m.aulas?`<span>· ${m.aulas} aulas</span>`:''}<span class="mod-open">abrir →</span>`
+      : `<span class="mod-badge wait">Em breve</span>`;
+    const inner=`<span class="mod-n">Módulo ${m.n}</span>
+       <div class="mod-t">${esc(m.title)}</div>
+       <div class="mod-meta">${meta}</div>`;
+    return ready
+      ? `<a class="mod-card" href="${m.file}">${inner}</a>`
+      : `<div class="mod-card soon">${inner}</div>`;
+  }).join('')+'</div>';
+}
 function renderOverdue(sched){
   const list=[];
   data.tracks.forEach(tk=>tk.tasks.forEach(t=>{
