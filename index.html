@@ -116,6 +116,21 @@
   .hint{font-size:.8rem;color:#8a8576;background:#f1ecdf;border:1px dashed #d8cdb6;border-radius:10px;padding:10px 14px;margin:18px 0;font-weight:300}
   .hint b{color:var(--sage);font-weight:600}
   .end-pill{display:inline-block;background:var(--crit-bg);color:var(--crit);border:1px solid #e3c4b3;border-radius:20px;padding:5px 14px;font-weight:600;font-size:.9rem;margin-left:6px}
+  .pill.date.late{background:var(--crit);color:#fff;border-color:var(--crit)}
+  .pill.date.late::before{content:'⚠ '}
+  .overdue-card{background:var(--crit-bg);border:1px solid #e3c4b3;border-left:4px solid var(--crit);border-radius:12px;padding:16px 20px;margin:20px 0}
+  .overdue-card h4{font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--crit);font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .overdue-card h4 .badge-n{background:var(--crit);color:#fff;font-family:'Jost',sans-serif;font-size:.8rem;border-radius:20px;padding:2px 10px;font-weight:600}
+  .ov-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #e6cdbf;font-size:.92rem}
+  .ov-item:last-child{border-bottom:none}
+  .ov-item .ov-date{background:#fff;color:var(--crit);border:1px solid #e3c4b3;border-radius:16px;padding:2px 10px;font-size:.78rem;font-weight:600;white-space:nowrap}
+  .ov-item .ov-late{color:var(--crit);font-size:.78rem;font-weight:600;white-space:nowrap}
+  .ov-item .ov-track{color:#9a7d4a;font-size:.78rem;white-space:nowrap}
+  .ov-item .ov-owner{color:#7a766c;font-size:.8rem;white-space:nowrap}
+  .ov-item .ov-title{flex:1;font-weight:500;color:#5a3527}
+  .ov-empty{color:var(--fin);font-weight:500;font-size:.92rem}
+  .ov-ok{background:var(--fin-bg);border-color:#c7d4ba;border-left-color:var(--fin)}
+  .ov-ok h4{color:var(--fin)}
   @media(max-width:600px){ .t-actions{opacity:1} .overall-card .big{font-size:2.1rem} }
 </style>
 </head>
@@ -161,6 +176,8 @@
     <span><i class="dot d-fin"></i> Fase Final</span>
     <span style="color:#b3ac9c">· 📅 datas automáticas · ⏱ ajuste a duração</span>
   </div>
+
+  <div id="overdue"></div>
 
   <div id="board"></div>
   <button class="add-track" id="btnAddTrack">+ Adicionar trilha / tópico</button>
@@ -262,8 +279,13 @@ function counts(){ let done=0,doing=0,todo=0,blocked=0,total=0;
   return {done,doing,todo,blocked,total}; }
 function allOwners(){ const s=new Set(); data.tracks.forEach(tk=>tk.tasks.forEach(t=>{if(t.owner)s.add(t.owner);})); return [...s].sort(); }
 
+function today0(){ const n=new Date(); return new Date(n.getFullYear(),n.getMonth(),n.getDate()); }
+function isLate(t,sc){ return t.status!=='done' && !t.continuous && sc && sc.end < today0(); }
+function daysLate(sc){ return Math.round((today0()-sc.end)/86400000); }
+
 function render(){
   const sched=schedule();
+  renderOverdue(sched);
   const c=counts(); const pct=c.total?Math.round(c.done/c.total*100):0;
   document.getElementById('ovPct').innerHTML=pct+'<small>%</small>';
   document.getElementById('ovBar').style.width=pct+'%';
@@ -324,7 +346,7 @@ function render(){
             <span class="t-title" contenteditable spellcheck="false" data-edit="task-title" data-ti="${ti}" data-tj="${j}">${esc(t.title)}</span>
             <div class="t-meta">
               <button class="status ${st.cls}" data-status="${ti}:${j}">${st.label}</button>
-              <span class="pill date" title="Calculada automaticamente">${dateLabel}</span>
+              <span class="pill date${isLate(t,sc)?' late':''}" title="Calculada automaticamente">${dateLabel}</span>
               ${t.continuous?`<span class="pill dur">contínuo</span>`:`<span class="pill dur" contenteditable spellcheck="false" data-edit="task-dur" data-ti="${ti}" data-tj="${j}">${durLabel}</span>`}
               <span class="pill owner" contenteditable spellcheck="false" data-edit="task-owner" data-ti="${ti}" data-tj="${j}">${esc(t.owner||'—')}</span>
             </div>
@@ -341,6 +363,31 @@ function render(){
   bind();
 }
 
+function renderOverdue(sched){
+  const list=[];
+  data.tracks.forEach(tk=>tk.tasks.forEach(t=>{
+    const sc=sched[t.id]; if(isLate(t,sc)) list.push({t,tk,sc});
+  }));
+  list.sort((a,b)=>a.sc.end-b.sc.end);
+  const box=document.getElementById('overdue');
+  if(list.length===0){
+    box.innerHTML=`<div class="overdue-card ov-ok"><h4>✓ Nada atrasado</h4><div class="ov-empty">Todas as tarefas estão dentro do prazo ou concluídas. 🎯</div></div>`;
+    return;
+  }
+  box.innerHTML=`<div class="overdue-card">
+    <h4>⚠ Tarefas atrasadas <span class="badge-n">${list.length}</span></h4>
+    ${list.map(o=>{
+      const d=daysLate(o.sc);
+      return `<div class="ov-item">
+        <span class="ov-date">venceu ${fmt(o.sc.end)}</span>
+        <span class="ov-late">${d} ${d===1?'dia':'dias'} de atraso</span>
+        <span class="ov-title">${esc(o.t.title)}</span>
+        <span class="ov-owner">👤 ${esc(o.t.owner||'—')}</span>
+        <span class="ov-track">${esc(o.tk.tag)}</span>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
 function focusLastSub(a,b){
   requestAnimationFrame(()=>{
     const subs=data.tracks[a].tasks[b].subs||[];
