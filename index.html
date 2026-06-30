@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cronograma · Desmame do Mounjaro sem Segredos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --sage:#536147; --sage-dark:#3d4835; --gold:#B8956A; --gold-soft:#d8c3a5;
+    --cream:#F4EFE4; --charcoal:#272520; --white:#fbf9f4;
+    --crit:#a0563b; --crit-bg:#f3e3da;
+    --par:#9a7d4a; --par-bg:#f1e9d8;
+    --fin:#5e7150; --fin-bg:#e6ecdd;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--cream);color:var(--charcoal);font-family:'Jost',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px 80px}
+  header{background:var(--sage);color:var(--cream);padding:54px 22px 46px;text-align:center;border-bottom:4px solid var(--gold)}
+  header .kick{font-size:.8rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold-soft);font-weight:500}
+  header h1{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(2.1rem,5vw,3.3rem);line-height:1.05;margin:.35em 0 .25em}
+  header p{font-weight:300;font-size:1.02rem;opacity:.9;max-width:620px;margin:0 auto}
+  .meta{margin-top:22px;display:inline-flex;gap:26px;flex-wrap:wrap;justify-content:center;font-size:.86rem}
+  .meta b{color:var(--gold-soft);font-weight:600;display:block;font-size:1.45rem;font-family:'Cormorant Garamond',serif}
+  .meta span{opacity:.85;letter-spacing:.04em}
+  section{margin-top:48px}
+  h2{font-family:'Cormorant Garamond',serif;font-size:1.9rem;color:var(--sage);font-weight:700;border-bottom:1.5px solid var(--gold-soft);padding-bottom:8px;margin-bottom:6px}
+  h2 .sub{display:block;font-family:'Jost',sans-serif;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:4px}
+  .lead{font-weight:300;color:#5a564d;margin-bottom:20px;font-size:1rem}
+  /* legend */
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin:26px 0 0;font-size:.84rem}
+  .legend span{display:inline-flex;align-items:center;gap:7px;font-weight:400}
+  .dot{width:13px;height:13px;border-radius:50%;display:inline-block}
+  .d-crit{background:var(--crit)} .d-par{background:var(--par)} .d-fin{background:var(--fin)}
+  /* tracks */
+  .track{background:var(--white);border:1px solid #e8e0cf;border-radius:14px;padding:22px 24px;margin-bottom:22px;box-shadow:0 2px 10px rgba(60,72,53,.04)}
+  .track-head{display:flex;align-items:center;gap:11px;margin-bottom:6px}
+  .track-head .badge{width:11px;height:34px;border-radius:5px}
+  .track-head h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600}
+  .track-head .tag{margin-left:auto;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 11px;border-radius:20px;font-weight:500}
+  .b-crit{background:var(--crit)} .b-par{background:var(--par)} .b-fin{background:var(--fin)}
+  .t-crit{background:var(--crit-bg);color:var(--crit)} .t-par{background:var(--par-bg);color:var(--par)} .t-fin{background:var(--fin-bg);color:var(--fin)}
+  .track-note{font-weight:300;color:#6b6658;font-size:.9rem;margin-bottom:14px}
+  table{width:100%;border-collapse:collapse;font-size:.92rem}
+  th{text-align:left;font-weight:600;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);padding:8px 10px;border-bottom:1.5px solid var(--gold-soft)}
+  td{padding:11px 10px;border-bottom:1px solid #efe7d6;vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .num{font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--gold);font-size:1.15rem;width:34px}
+  .owner{display:inline-block;background:var(--cream);border:1px solid #e2d8c4;border-radius:20px;padding:2px 11px;font-size:.8rem;color:var(--sage-dark);font-weight:500;white-space:nowrap}
+  .dur{font-weight:600;color:var(--charcoal);white-space:nowrap}
+  .dep{color:#9a958a;font-size:.85rem}
+  /* timeline */
+  .tl{position:relative;margin-top:24px;border-left:2px solid var(--gold-soft);padding-left:26px}
+  .tl-item{position:relative;padding-bottom:24px}
+  .tl-item::before{content:'';position:absolute;left:-33px;top:3px;width:13px;height:13px;border-radius:50%;background:var(--gold);border:3px solid var(--cream)}
+  .tl-item.go::before{background:var(--sage);width:16px;height:16px;left:-34.5px}
+  .tl-date{font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--sage);font-size:1.15rem}
+  .tl-focus{font-weight:300;color:#5a564d;font-size:.95rem}
+  .tl-item.go .tl-date{color:var(--crit)}
+  /* alert */
+  .alert{background:var(--crit-bg);border:1px solid #e3c4b3;border-left:4px solid var(--crit);border-radius:10px;padding:16px 20px;margin-top:14px;font-size:.93rem;color:#7a3f2c}
+  .alert b{color:var(--crit)}
+  footer{text-align:center;margin-top:60px;padding-top:24px;border-top:1px solid var(--gold-soft);color:#8a8576;font-size:.82rem;font-weight:300}
+  footer .sig{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--sage);font-weight:600;display:block;margin-bottom:4px}
+  @media(max-width:620px){
+    .meta{gap:18px} td .dep{display:block}
+    table,thead,tbody,th,td,tr{display:block}
+    thead{display:none}
+    td{border:none;padding:3px 0}
+    tr{border-bottom:1px solid #efe7d6;padding:12px 0}
+    .num{display:inline;margin-right:6px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="kick">Plano de Execução · Curso Ademir Ferreira</div>
+  <h1>Desmame do Mounjaro<br>sem Segredos</h1>
+  <p>Cronograma de estruturação do curso reorganizado por trilhas de trabalho, com donos definidos, dependências e caminho crítico — ancorado em datas reais.</p>
+  <div class="meta">
+    <div><b>12</b><span>Tarefas</span></div>
+    <div><b>10</b><span>Módulos</span></div>
+    <div><b>~33</b><span>Dias úteis</span></div>
+    <div><b>~28/07</b><span>Lançamento alvo</span></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <h2><span class="sub">Como ler este plano</span>Trilhas em paralelo</h2>
+    <p class="lead">As tarefas foram agrupadas pelo que pode rodar simultaneamente. A <b>Trilha Crítica</b> (conteúdo) é quem define a data de lançamento — qualquer atraso nela empurra tudo.</p>
+    <div class="legend">
+      <span><i class="dot d-crit"></i> Trilha Crítica — trava o lançamento</span>
+      <span><i class="dot d-par"></i> Trilhas Paralelas — rodam ao lado</span>
+      <span><i class="dot d-fin"></i> Fase Final — após o curso pronto</span>
+    </div>
+  </section>
+
+  <section>
+    <!-- TRILHA CRÍTICA -->
+    <div class="track">
+      <div class="track-head">
+        <span class="badge b-crit"></span>
+        <h3>Trilha Crítica · Conteúdo</h3>
+        <span class="tag t-crit">Caminho crítico</span>
+      </div>
+      <p class="track-note">Sequência obrigatória: cada etapa depende da anterior. ~28 dias no total — é ela que manda no calendário.</p>
+      <table>
+        <thead><tr><th>#</th><th>Tarefa</th><th>Dono</th><th>Duração</th><th>Depende de</th></tr></thead>
+        <tbody>
+          <tr><td class="num">1</td><td>Estrutura do curso — 10 módulos, até 5 aulas, jornada do aluno</td><td><span class="owner">Ademir</span></td><td class="dur">3 dias</td><td class="dep">—</td></tr>
+          <tr><td class="num">3</td><td>Roteiros das aulas (máx. 20 min cada) + materiais de apoio</td><td><span class="owner">Ademir + Copy</span></td><td class="dur">5 dias</td><td class="dep">#1</td></tr>
+          <tr><td class="num">7</td><td>Gravação das aulas — todos os módulos</td><td><span class="owner">Ademir</span></td><td class="dur">10 dias</td><td class="dep">#3</td></tr>
+          <tr><td class="num">8</td><td>Edição e finalização — vinhetas, CTAs, provas sociais, revisão</td><td><span class="owner">Editor</span></td><td class="dur">10 dias</td><td class="dep">#7</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PARALELA A -->
+    <div class="track">
+      <div class="track-head">
+        <span class="badge b-par"></span>
+        <h3>Trilha Paralela A · Comercial & Plataforma</h3>
+        <span class="tag t-par">Paralela</span>
+      </div>
+      <p class="track-note">Responsável: Gian. Pode avançar assim que a estrutura (#1) estiver definida.</p>
+      <table>
+        <thead><tr><th>#</th><th>Tarefa</th><th>Dono</th><th>Duração</th><th>Depende de</th></tr></thead>
+        <tbody>
+          <tr><td class="num">2</td><td>Precificação e modelo comercial — oferta, preço, pagamentos, complementares</td><td><span class="owner">Ademir + Gian</span></td><td class="dur">2 dias</td><td class="dep">#1</td></tr>
+          <tr><td class="num">9</td><td>Configuração KiwiFy — produto, checkout, liberação automática, testes</td><td><span class="owner">Gian</span></td><td class="dur">3 dias</td><td class="dep">#2</td></tr>
+          <tr><td class="num">10</td><td>Estruturação do Upsell — dieta padrão + comunidade VIP + automação</td><td><span class="owner">Gian</span></td><td class="dur">4 dias</td><td class="dep">#2, #9</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PARALELA B -->
+    <div class="track">
+      <div class="track-head">
+        <span class="badge b-par"></span>
+        <h3>Trilha Paralela B · Autoridade & Prova Social</h3>
+        <span class="tag t-par">Paralela</span>
+      </div>
+      <p class="track-note">Pode começar imediatamente — não depende do conteúdo estar pronto.</p>
+      <table>
+        <thead><tr><th>#</th><th>Tarefa</th><th>Dono</th><th>Duração</th><th>Depende de</th></tr></thead>
+        <tbody>
+          <tr><td class="num">6</td><td>Especialistas convidados — endócrino, psicólogo, psiquiatra, gineco (agendar + gravar)</td><td><span class="owner">Ademir agenda</span></td><td class="dur">7 dias</td><td class="dep">—</td></tr>
+          <tr><td class="num">5</td><td>Provas sociais — levantar depoimentos, autorizações, selecionar cases</td><td><span class="owner">Social Media</span></td><td class="dur">4 dias</td><td class="dep">—</td></tr>
+          <tr><td class="num">4</td><td>CTAs padronizados ao final de cada módulo</td><td><span class="owner">Copy</span></td><td class="dur">2 dias</td><td class="dep">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FINAL -->
+    <div class="track">
+      <div class="track-head">
+        <span class="badge b-fin"></span>
+        <h3>Fase Final · Divulgação & Lançamento</h3>
+        <span class="tag t-fin">Pós-produção</span>
+      </div>
+      <p class="track-note">Entra depois que o curso estiver editado e publicado.</p>
+      <table>
+        <thead><tr><th>#</th><th>Tarefa</th><th>Dono</th><th>Duração</th><th>Depende de</th></tr></thead>
+        <tbody>
+          <tr><td class="num">11</td><td>Plano de divulgação — calendário, stories, WhatsApp, e-mail, ads (opcional)</td><td><span class="owner">Social + Ademir</span></td><td class="dur">3 dias</td><td class="dep">#8</td></tr>
+          <tr><td class="num">12</td><td>Lançamento oficial — abrir carrinho, monitorar métricas, coletar feedback</td><td><span class="owner">Time todo</span></td><td class="dur">Contínuo</td><td class="dep">#11</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="sub">Calendário a partir de hoje · 25/06</span>Linha do tempo realista</h2>
+    <p class="lead">Mesma estimativa original (30–40 dias), agora ancorada em datas que existem.</p>
+    <div class="tl">
+      <div class="tl-item"><div class="tl-date">25 – 27 jun</div><div class="tl-focus">Estrutura do curso (#1) · iniciar agendamento de especialistas (#6) · levantar provas sociais (#5)</div></div>
+      <div class="tl-item"><div class="tl-date">28 jun – 02 jul</div><div class="tl-focus">Roteiros (#3) ‖ Precificação + KiwiFy (#2, #9) ‖ CTAs (#4)</div></div>
+      <div class="tl-item"><div class="tl-date">03 – 12 jul</div><div class="tl-focus">Gravação das aulas (#7) ‖ Upsell (#10) ‖ gravações dos especialistas</div></div>
+      <div class="tl-item"><div class="tl-date">13 – 22 jul</div><div class="tl-focus">Edição e finalização (#8)</div></div>
+      <div class="tl-item"><div class="tl-date">23 – 25 jul</div><div class="tl-focus">Plano de divulgação (#11)</div></div>
+      <div class="tl-item go"><div class="tl-date">~28 jul</div><div class="tl-focus"><b>Lançamento oficial — abertura de carrinho</b></div></div>
+    </div>
+    <div class="alert">⚠️ <b>Atenção:</b> os prazos do cronograma original (18–23/06) já passaram. Este calendário reinicia a contagem a partir de hoje. A <b>Trilha Crítica</b> (estrutura → roteiro → gravação → edição) é a única que não pode escorregar sem mexer na data de lançamento.</div>
+  </section>
+
+  <section>
+    <h2><span class="sub">Como saberemos que deu certo</span>Indicadores de sucesso</h2>
+    <div class="track">
+      <table>
+        <tbody>
+          <tr><td class="num">↗</td><td>Número de vendas nas primeiras turmas</td><td class="dep">Volume</td></tr>
+          <tr><td class="num">%</td><td>Taxa de conversão da página de vendas</td><td class="dep">Eficiência</td></tr>
+          <tr><td class="num">$</td><td>Ticket médio (com upsell)</td><td class="dep">Receita</td></tr>
+          <tr><td class="num">✓</td><td>Taxa de conclusão do curso pelos alunos</td><td class="dep">Entrega</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <span class="sig">Desmame do Mounjaro sem Segredos</span>
+    Plano de estruturação · Ademir Ferreira · atualizado em 25/06/2026
+  </footer>
+
+</div>
+</body>
+</html>
