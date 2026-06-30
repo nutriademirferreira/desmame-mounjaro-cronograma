@@ -24,7 +24,6 @@
   header h1{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(2rem,5vw,3.1rem);line-height:1.05;margin:.3em 0 .2em}
   header p{font-weight:300;font-size:.98rem;opacity:.9;max-width:640px;margin:0 auto}
 
-  /* overall progress */
   .overall{max-width:1120px;margin:-22px auto 0;padding:0 18px;position:relative;z-index:2}
   .overall-card{background:var(--white);border:1px solid #e8e0cf;border-radius:14px;padding:18px 22px;box-shadow:0 6px 22px rgba(60,72,53,.1);display:flex;align-items:center;gap:22px;flex-wrap:wrap}
   .overall-card .big{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:700;color:var(--sage);line-height:1}
@@ -36,23 +35,19 @@
   .overall-stats b{font-family:'Cormorant Garamond',serif;font-size:1.3rem;display:block}
   .s-done b{color:var(--done)} .s-doing b{color:var(--doing)} .s-todo b{color:#9a958a} .s-blocked b{color:var(--blocked)}
 
-  /* toolbar */
   .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:26px 0 4px}
-  .toolbar .filter{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:.82rem}
-  .toolbar select,.btn{font-family:'Jost',sans-serif;font-size:.85rem;border:1px solid #d8cdb6;background:var(--white);color:var(--charcoal);border-radius:9px;padding:7px 13px;cursor:pointer;transition:.15s}
+  .toolbar .grp{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:.82rem;color:#8a8576}
+  .toolbar select,.toolbar input[type=date],.btn{font-family:'Jost',sans-serif;font-size:.85rem;border:1px solid #d8cdb6;background:var(--white);color:var(--charcoal);border-radius:9px;padding:7px 12px;cursor:pointer;transition:.15s}
+  .toolbar input[type=date]{cursor:auto}
   .btn:hover{border-color:var(--gold);color:var(--sage)}
-  .btn.primary{background:var(--sage);color:var(--cream);border-color:var(--sage)}
-  .btn.primary:hover{background:var(--sage-dark);color:#fff}
   .toolbar .spacer{flex:1}
   .saved{font-size:.76rem;color:#9a958a;font-weight:300}
 
-  section{margin-top:30px}
-  .legend{display:flex;gap:16px;flex-wrap:wrap;margin:6px 0 22px;font-size:.82rem;color:#6b6658}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin:18px 0 22px;font-size:.82rem;color:#6b6658}
   .legend span{display:inline-flex;align-items:center;gap:6px}
   .dot{width:12px;height:12px;border-radius:50%}
   .d-crit{background:var(--crit)} .d-par{background:var(--par)} .d-fin{background:var(--fin)}
 
-  /* track */
   .track{background:var(--white);border:1px solid #e8e0cf;border-radius:14px;padding:20px 22px;margin-bottom:20px;box-shadow:0 2px 10px rgba(60,72,53,.04)}
   .track-head{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
   .track-head .badge{width:10px;height:30px;border-radius:5px;flex-shrink:0}
@@ -67,25 +62,25 @@
   .track-note{font-weight:300;color:#6b6658;font-size:.86rem;margin:4px 0 14px;cursor:text;border-radius:5px;padding:1px 4px}
   .track-note:focus{outline:2px solid var(--gold-soft);background:#fff}
 
-  /* task row */
-  .task{display:flex;align-items:flex-start;gap:12px;padding:11px 8px;border-bottom:1px solid #efe7d6;border-radius:8px;transition:.12s}
+  .task{display:flex;align-items:center;gap:12px;padding:11px 8px;border-bottom:1px solid #efe7d6;border-radius:8px;transition:.12s}
   .task:hover{background:#faf6ec}
   .task:last-of-type{border-bottom:none}
-  .task.done{opacity:.62}
+  .task.done{opacity:.6}
   .task.done .t-title{text-decoration:line-through;text-decoration-color:var(--gold)}
-  .chk{appearance:none;width:21px;height:21px;border:2px solid var(--gold);border-radius:6px;cursor:pointer;flex-shrink:0;margin-top:2px;position:relative;transition:.15s}
+  .chk{appearance:none;width:21px;height:21px;border:2px solid var(--gold);border-radius:6px;cursor:pointer;flex-shrink:0;position:relative;transition:.15s}
   .chk:checked{background:var(--done);border-color:var(--done)}
   .chk:checked::after{content:'✓';color:#fff;position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
   .t-body{flex:1;min-width:0}
-  .t-title{font-size:.96rem;font-weight:400;cursor:text;border-radius:5px;padding:1px 3px;display:inline-block;min-width:40px}
+  .t-title{font-size:.97rem;font-weight:500;cursor:text;border-radius:5px;padding:1px 3px;display:inline-block;min-width:40px}
   .t-title:focus{outline:2px solid var(--gold-soft);background:#fff}
   .t-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:6px;align-items:center}
-  .pill{font-size:.74rem;border-radius:18px;padding:2px 10px;border:1px solid #e2d8c4;background:var(--cream);color:var(--sage-dark);font-weight:500;cursor:text}
-  .pill:focus{outline:2px solid var(--gold-soft);background:#fff}
+  .pill{font-size:.74rem;border-radius:18px;padding:2px 10px;border:1px solid #e2d8c4;background:var(--cream);color:var(--sage-dark);font-weight:500}
+  .pill[contenteditable]{cursor:text}
+  .pill[contenteditable]:focus{outline:2px solid var(--gold-soft);background:#fff}
   .pill.owner::before{content:'👤 '}
+  .pill.date{background:#eef1e8;border-color:#cfd8c2;color:var(--sage-dark);font-weight:600}
+  .pill.date::before{content:'📅 '}
   .pill.dur::before{content:'⏱ '}
-  .pill.dep{color:#9a958a}
-  .pill.dep::before{content:'↳ '}
   .status{font-size:.72rem;border:none;border-radius:18px;padding:3px 11px;font-weight:600;cursor:pointer;color:#fff;font-family:'Jost',sans-serif}
   .st-todo{background:var(--todo)} .st-doing{background:var(--doing)} .st-done{background:var(--done)} .st-blocked{background:var(--blocked)}
   .t-actions{display:flex;gap:4px;flex-shrink:0;opacity:0;transition:.12s}
@@ -94,37 +89,22 @@
   .icon-btn:hover{color:var(--crit);background:#f3e3da}
   .add-task{margin-top:10px;background:none;border:1.5px dashed #d8cdb6;color:var(--sage);width:100%;padding:9px;border-radius:9px;cursor:pointer;font-size:.85rem;font-weight:500;font-family:'Jost',sans-serif;transition:.15s}
   .add-task:hover{border-color:var(--gold);background:#faf6ec}
-
   .add-track{background:none;border:1.5px dashed var(--gold-soft);color:var(--sage);width:100%;padding:14px;border-radius:12px;cursor:pointer;font-size:.92rem;font-weight:500;font-family:'Jost',sans-serif;margin-top:6px;transition:.15s}
   .add-track:hover{background:#faf6ec;border-color:var(--gold)}
 
-  /* timeline (static reference) */
-  h2{font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:var(--sage);font-weight:700;border-bottom:1.5px solid var(--gold-soft);padding-bottom:7px;margin:40px 0 14px}
-  h2 .sub{display:block;font-family:'Jost',sans-serif;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:3px}
-  .tl{position:relative;border-left:2px solid var(--gold-soft);padding-left:24px;margin-top:8px}
-  .tl-item{position:relative;padding-bottom:20px}
-  .tl-item::before{content:'';position:absolute;left:-31px;top:3px;width:12px;height:12px;border-radius:50%;background:var(--gold);border:3px solid var(--cream)}
-  .tl-item.go::before{background:var(--crit);width:15px;height:15px;left:-32.5px}
-  .tl-date{font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--sage);font-size:1.1rem}
-  .tl-item.go .tl-date{color:var(--crit)}
-  .tl-focus{font-weight:300;color:#5a564d;font-size:.92rem}
-
   footer{text-align:center;margin-top:50px;padding-top:22px;border-top:1px solid var(--gold-soft);color:#8a8576;font-size:.8rem;font-weight:300}
   footer .sig{font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--sage);font-weight:600;display:block;margin-bottom:4px}
-
-  .hint{font-size:.8rem;color:#8a8576;background:#f1ecdf;border:1px dashed #d8cdb6;border-radius:10px;padding:10px 14px;margin:14px 0;font-weight:300}
+  .hint{font-size:.8rem;color:#8a8576;background:#f1ecdf;border:1px dashed #d8cdb6;border-radius:10px;padding:10px 14px;margin:18px 0;font-weight:300}
   .hint b{color:var(--sage);font-weight:600}
-  @media(max-width:600px){
-    .t-actions{opacity:1}
-    .overall-card .big{font-size:2.1rem}
-  }
+  .end-pill{display:inline-block;background:var(--crit-bg);color:var(--crit);border:1px solid #e3c4b3;border-radius:20px;padding:5px 14px;font-weight:600;font-size:.9rem;margin-left:6px}
+  @media(max-width:600px){ .t-actions{opacity:1} .overall-card .big{font-size:2.1rem} }
 </style>
 </head>
 <body>
 <header>
   <div class="kick">Board de Execução · Curso Ademir Ferreira</div>
   <h1>Desmame do Mounjaro<br>sem Segredos</h1>
-  <p>Quadro de trabalho interativo — marque tarefas, ajuste donos e prazos, adicione itens. Tudo salvo no seu navegador.</p>
+  <p>As datas são calculadas automaticamente a partir do início do projeto, das durações e das dependências.</p>
 </header>
 
 <div class="overall">
@@ -146,15 +126,13 @@
 <div class="wrap">
 
   <div class="toolbar">
-    <div class="filter">
-      <span style="color:#8a8576">Filtrar por responsável:</span>
-      <select id="ownerFilter"><option value="">Todos</option></select>
-    </div>
+    <div class="grp">Início do projeto: <input type="date" id="startDate" /></div>
+    <div class="grp">Responsável: <select id="ownerFilter"><option value="">Todos</option></select></div>
     <div class="spacer"></div>
     <span class="saved" id="savedMsg"></span>
     <button class="btn" id="btnExport">⬇ Exportar</button>
     <button class="btn" id="btnImport">⬆ Importar</button>
-    <button class="btn" id="btnReset">↺ Restaurar padrão</button>
+    <button class="btn" id="btnReset">↺ Padrão</button>
     <input type="file" id="fileInput" accept="application/json" style="display:none" />
   </div>
 
@@ -162,23 +140,15 @@
     <span><i class="dot d-crit"></i> Trilha Crítica — define o lançamento</span>
     <span><i class="dot d-par"></i> Trilhas Paralelas</span>
     <span><i class="dot d-fin"></i> Fase Final</span>
-    <span style="color:#b3ac9c">· clique em qualquer texto para editar</span>
+    <span style="color:#b3ac9c">· 📅 datas automáticas · ⏱ ajuste a duração</span>
   </div>
 
   <div id="board"></div>
-  <button class="add-track" id="btnAddTrack">+ Adicionar nova trilha / tópico</button>
+  <button class="add-track" id="btnAddTrack">+ Adicionar trilha / tópico</button>
 
-  <h2><span class="sub">Calendário de referência · a partir de 25/06</span>Linha do tempo alvo</h2>
-  <div class="tl">
-    <div class="tl-item"><div class="tl-date">25 – 27 jun</div><div class="tl-focus">Estrutura do curso · iniciar agendamento de especialistas · provas sociais</div></div>
-    <div class="tl-item"><div class="tl-date">28 jun – 02 jul</div><div class="tl-focus">Roteiros ‖ Precificação + KiwiFy ‖ CTAs</div></div>
-    <div class="tl-item"><div class="tl-date">03 – 12 jul</div><div class="tl-focus">Gravação das aulas ‖ Upsell ‖ gravações dos especialistas</div></div>
-    <div class="tl-item"><div class="tl-date">13 – 22 jul</div><div class="tl-focus">Edição e finalização</div></div>
-    <div class="tl-item"><div class="tl-date">23 – 25 jul</div><div class="tl-focus">Plano de divulgação</div></div>
-    <div class="tl-item go"><div class="tl-date">~28 jul</div><div class="tl-focus"><b>Lançamento oficial — abertura de carrinho</b></div></div>
-  </div>
+  <div class="hint" id="launchHint"></div>
 
-  <div class="hint">💡 <b>Dica de fluxo:</b> defina um responsável por trilha, faça um check-in rápido toda segunda movendo os status, e quem coordena exporta o board (botão ⬇) e manda no grupo como “foto da semana”. Para sincronização ao vivo entre todo o time, dá pra conectar a um backend depois.</div>
+  <div class="hint">💡 <b>Fluxo sugerido:</b> um responsável por trilha · check-in toda segunda movendo os status · quem coordena exporta (⬇) e manda no grupo como “foto da semana”. As datas se reajustam sozinhas quando você muda uma duração ou o início do projeto.</div>
 
   <footer>
     <span class="sig">Desmame do Mounjaro sem Segredos</span>
@@ -187,115 +157,115 @@
 </div>
 
 <script>
-const KEY = 'board_mounjaro_v1';
+const KEY = 'board_mounjaro_v2';
+const MES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 
+// dur = dias corridos. deps = ids que precisam terminar antes. status. continuous = sem fim definido.
 const DEFAULT = {
-  updated: '',
-  tracks: [
+  updated:'', start:'2026-06-25',
+  tracks:[
     { id:'crit', type:'crit', tag:'Caminho crítico', title:'Trilha Crítica · Conteúdo',
-      note:'Sequência obrigatória: cada etapa depende da anterior. ~28 dias — define o calendário.',
+      note:'Sequência obrigatória — define o calendário do lançamento.',
       tasks:[
-        {id:'t1', title:'Estrutura do curso — 10 módulos, até 5 aulas, jornada do aluno', owner:'Ademir', dur:'3 dias', dep:'—', status:'todo'},
-        {id:'t3', title:'Roteiros das aulas (máx. 20 min cada) + materiais de apoio', owner:'Ademir + Copy', dur:'5 dias', dep:'#1', status:'todo'},
-        {id:'t7', title:'Gravação das aulas — todos os módulos', owner:'Ademir', dur:'10 dias', dep:'#3', status:'todo'},
-        {id:'t8', title:'Edição e finalização — vinhetas, CTAs, provas sociais, revisão', owner:'Editor', dur:'10 dias', dep:'#7', status:'todo'},
+        {id:'t1', title:'Estrutura do curso', owner:'Ademir', dur:3, deps:[], status:'todo'},
+        {id:'t3', title:'Roteiros das aulas', owner:'Ademir + Copy', dur:5, deps:['t1'], status:'todo'},
+        {id:'t7', title:'Gravação das aulas', owner:'Ademir', dur:10, deps:['t3'], status:'todo'},
+        {id:'t8', title:'Edição e finalização', owner:'Editor', dur:10, deps:['t7'], status:'todo'},
       ]},
     { id:'parA', type:'par', tag:'Paralela', title:'Trilha Paralela A · Comercial & Plataforma',
-      note:'Responsável: Gian. Avança assim que a estrutura estiver definida.',
+      note:'Responsável: Gian.',
       tasks:[
-        {id:'t2', title:'Precificação e modelo comercial — oferta, preço, pagamentos, complementares', owner:'Ademir + Gian', dur:'2 dias', dep:'#1', status:'todo'},
-        {id:'t9', title:'Configuração KiwiFy — produto, checkout, liberação automática, testes', owner:'Gian', dur:'3 dias', dep:'#2', status:'todo'},
-        {id:'t10', title:'Estruturação do Upsell — dieta padrão + comunidade VIP + automação', owner:'Gian', dur:'4 dias', dep:'#2, #9', status:'todo'},
+        {id:'t2', title:'Precificação e oferta', owner:'Ademir + Gian', dur:2, deps:['t1'], status:'todo'},
+        {id:'t9', title:'Configuração KiwiFy', owner:'Gian', dur:3, deps:['t2'], status:'todo'},
+        {id:'t10', title:'Upsell (dieta + comunidade)', owner:'Gian', dur:4, deps:['t9'], status:'todo'},
       ]},
-    { id:'parB', type:'par', tag:'Paralela', title:'Trilha Paralela B · Autoridade & Prova Social',
-      note:'Pode começar imediatamente — não depende do conteúdo estar pronto.',
+    { id:'parB', type:'par', tag:'Paralela', title:'Trilha Paralela B · Autoridade',
+      note:'Pode começar imediatamente.',
       tasks:[
-        {id:'t6', title:'Especialistas convidados — endócrino, psicólogo, psiquiatra, gineco (agendar + gravar)', owner:'Ademir agenda', dur:'7 dias', dep:'—', status:'todo'},
-        {id:'t5', title:'Provas sociais — depoimentos, autorizações, selecionar cases', owner:'Social Media', dur:'4 dias', dep:'—', status:'todo'},
-        {id:'t4', title:'CTAs padronizados ao final de cada módulo', owner:'Copy', dur:'2 dias', dep:'—', status:'todo'},
+        {id:'t6', title:'Especialistas convidados', owner:'Ademir', dur:7, deps:[], status:'todo'},
+        {id:'t5', title:'Provas sociais', owner:'Social Media', dur:4, deps:[], status:'todo'},
+        {id:'t4', title:'CTAs dos módulos', owner:'Copy', dur:2, deps:[], status:'todo'},
       ]},
-    { id:'fin', type:'fin', tag:'Pós-produção', title:'Fase Final · Divulgação & Lançamento',
-      note:'Entra depois que o curso estiver editado e publicado.',
+    { id:'fin', type:'fin', tag:'Pós-produção', title:'Fase Final · Lançamento',
+      note:'Após o curso pronto.',
       tasks:[
-        {id:'t11', title:'Plano de divulgação — calendário, stories, WhatsApp, e-mail, ads', owner:'Social + Ademir', dur:'3 dias', dep:'#8', status:'todo'},
-        {id:'t12', title:'Lançamento oficial — abrir carrinho, métricas, feedback', owner:'Time todo', dur:'Contínuo', dep:'#11', status:'todo'},
+        {id:'t11', title:'Plano de divulgação', owner:'Social + Ademir', dur:3, deps:['t8'], status:'todo'},
+        {id:'t12', title:'Lançamento oficial', owner:'Time todo', dur:0, deps:['t11'], status:'todo', continuous:true},
       ]},
   ]
 };
 
-const STATUS = {
-  todo:    {label:'A fazer',     cls:'st-todo'},
-  doing:   {label:'Em andamento',cls:'st-doing'},
-  done:    {label:'Concluída',   cls:'st-done'},
-  blocked: {label:'Travada',     cls:'st-blocked'},
-};
-const STATUS_CYCLE = ['todo','doing','done','blocked'];
+const STATUS={todo:{label:'A fazer',cls:'st-todo'},doing:{label:'Em andamento',cls:'st-doing'},done:{label:'Concluída',cls:'st-done'},blocked:{label:'Travada',cls:'st-blocked'}};
+const CYCLE=['todo','doing','done','blocked'];
 
 let data = load();
-let filter = '';
 
-function load(){
-  try{ const s = localStorage.getItem(KEY); if(s) return JSON.parse(s); }catch(e){}
-  return JSON.parse(JSON.stringify(DEFAULT));
-}
-function save(){
-  data.updated = new Date().toISOString();
-  localStorage.setItem(KEY, JSON.stringify(data));
-  flashSaved();
-  render();
-}
-function flashSaved(){
-  const el = document.getElementById('savedMsg');
-  const d = new Date();
-  el.textContent = '✓ salvo ' + d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-}
+function load(){ try{const s=localStorage.getItem(KEY);if(s)return JSON.parse(s);}catch(e){} return JSON.parse(JSON.stringify(DEFAULT)); }
+function save(){ data.updated=new Date().toISOString(); localStorage.setItem(KEY,JSON.stringify(data)); flashSaved(); render(); }
+function flashSaved(){ document.getElementById('savedMsg').textContent='✓ salvo '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
 function uid(){ return 'x'+Math.random().toString(36).slice(2,8); }
+function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-function allOwners(){
-  const set = new Set();
-  data.tracks.forEach(tk=>tk.tasks.forEach(t=>{ if(t.owner) set.add(t.owner); }));
-  return [...set].sort();
+// ---- agendamento automático ----
+function parseStart(){ const [y,m,d]=(data.start||'2026-06-25').split('-').map(Number); return new Date(y,m-1,d); }
+function addDays(dt,n){ const x=new Date(dt); x.setDate(x.getDate()+n); return x; }
+function fmt(dt){ return dt.getDate()+' '+MES[dt.getMonth()]; }
+function fmtRange(s,e){ if(s.getMonth()===e.getMonth()) return s.getDate()+' – '+e.getDate()+' '+MES[e.getMonth()]; return fmt(s)+' – '+fmt(e); }
+
+function schedule(){
+  const byId={}; data.tracks.forEach(tk=>tk.tasks.forEach(t=>byId[t.id]=t));
+  const start0=parseStart(), memo={};
+  function endOf(id){
+    const t=byId[id]; if(!t) return start0;
+    if(memo[id]) return memo[id].end;
+    return compute(t).end;
+  }
+  function compute(t){
+    if(memo[t.id]) return memo[t.id];
+    let s=new Date(start0);
+    (t.deps||[]).forEach(d=>{ const de=addDays(endOf(d),1); if(de>s) s=de; });
+    const dur=Math.max(0,parseInt(t.dur)||0);
+    const e=t.continuous? s : addDays(s, Math.max(0,dur-1));
+    return memo[t.id]={start:s,end:e};
+  }
+  data.tracks.forEach(tk=>tk.tasks.forEach(t=>compute(t)));
+  return memo;
 }
 
-function counts(){
-  let done=0,doing=0,todo=0,blocked=0,total=0;
-  data.tracks.forEach(tk=>tk.tasks.forEach(t=>{
-    total++;
-    if(t.status==='done')done++; else if(t.status==='doing')doing++;
-    else if(t.status==='blocked')blocked++; else todo++;
-  }));
-  return {done,doing,todo,blocked,total};
+function projectEnd(sched){
+  let max=parseStart();
+  Object.values(sched).forEach(o=>{ if(o.end>max) max=o.end; });
+  return max;
 }
+function counts(){ let done=0,doing=0,todo=0,blocked=0,total=0;
+  data.tracks.forEach(tk=>tk.tasks.forEach(t=>{ total++;
+    if(t.status==='done')done++; else if(t.status==='doing')doing++; else if(t.status==='blocked')blocked++; else todo++; }));
+  return {done,doing,todo,blocked,total}; }
+function allOwners(){ const s=new Set(); data.tracks.forEach(tk=>tk.tasks.forEach(t=>{if(t.owner)s.add(t.owner);})); return [...s].sort(); }
 
 function render(){
-  // overall
-  const c = counts();
-  const pct = c.total? Math.round(c.done/c.total*100):0;
-  document.getElementById('ovPct').innerHTML = pct+'<small>%</small>';
-  document.getElementById('ovBar').style.width = pct+'%';
-  document.getElementById('cDone').textContent = c.done;
-  document.getElementById('cDoing').textContent = c.doing;
-  document.getElementById('cTodo').textContent = c.todo;
-  document.getElementById('cBlocked').textContent = c.blocked;
+  const sched=schedule();
+  const c=counts(); const pct=c.total?Math.round(c.done/c.total*100):0;
+  document.getElementById('ovPct').innerHTML=pct+'<small>%</small>';
+  document.getElementById('ovBar').style.width=pct+'%';
+  document.getElementById('cDone').textContent=c.done;
+  document.getElementById('cDoing').textContent=c.doing;
+  document.getElementById('cTodo').textContent=c.todo;
+  document.getElementById('cBlocked').textContent=c.blocked;
+  document.getElementById('startDate').value=data.start;
 
-  // owner filter
-  const sel = document.getElementById('ownerFilter');
-  const cur = sel.value;
-  sel.innerHTML = '<option value="">Todos</option>' + allOwners().map(o=>`<option ${o===cur?'selected':''}>${esc(o)}</option>`).join('');
-  filter = sel.value;
+  const sel=document.getElementById('ownerFilter'); const cur=sel.value;
+  sel.innerHTML='<option value="">Todos</option>'+allOwners().map(o=>`<option ${o===cur?'selected':''}>${esc(o)}</option>`).join('');
+  const filter=sel.value;
 
-  // board
-  const board = document.getElementById('board');
-  board.innerHTML = '';
-  data.tracks.forEach((tk, ti)=>{
-    const tasks = tk.tasks.filter(t=> !filter || t.owner===filter);
-    const tDone = tk.tasks.filter(t=>t.status==='done').length;
-    const tPct = tk.tasks.length? Math.round(tDone/tk.tasks.length*100):0;
-    const barColor = tk.type==='crit'?'var(--crit)':tk.type==='fin'?'var(--fin)':'var(--par)';
-
-    const div = document.createElement('div');
-    div.className='track';
-    div.innerHTML = `
+  const board=document.getElementById('board'); board.innerHTML='';
+  data.tracks.forEach((tk,ti)=>{
+    const tasks=tk.tasks.filter(t=>!filter||t.owner===filter);
+    const tDone=tk.tasks.filter(t=>t.status==='done').length;
+    const tPct=tk.tasks.length?Math.round(tDone/tk.tasks.length*100):0;
+    const barColor=tk.type==='crit'?'var(--crit)':tk.type==='fin'?'var(--fin)':'var(--par)';
+    const div=document.createElement('div'); div.className='track';
+    div.innerHTML=`
       <div class="track-head">
         <span class="badge b-${tk.type}"></span>
         <h3 contenteditable spellcheck="false" data-edit="track-title" data-ti="${ti}">${esc(tk.title)}</h3>
@@ -305,104 +275,63 @@ function render(){
       <div class="track-bar"><i style="width:${tPct}%;background:${barColor}"></i></div>
       <div class="track-note" contenteditable spellcheck="false" data-edit="track-note" data-ti="${ti}">${esc(tk.note)}</div>
       <div class="tasklist"></div>
-      <button class="add-task" data-add="${ti}">+ Adicionar tarefa</button>
-    `;
-    const list = div.querySelector('.tasklist');
-    if(tasks.length===0){
-      list.innerHTML = `<div style="color:#b3ac9c;font-size:.85rem;padding:8px 4px;font-weight:300">Nenhuma tarefa${filter?' para este responsável':''}.</div>`;
-    }
+      <button class="add-task" data-add="${ti}">+ Adicionar tarefa</button>`;
+    const list=div.querySelector('.tasklist');
+    if(tasks.length===0) list.innerHTML=`<div style="color:#b3ac9c;font-size:.85rem;padding:8px 4px;font-weight:300">Nenhuma tarefa${filter?' para este responsável':''}.</div>`;
     tasks.forEach(t=>{
-      const realIdx = tk.tasks.indexOf(t);
-      const row = document.createElement('div');
-      row.className = 'task'+(t.status==='done'?' done':'');
-      const st = STATUS[t.status]||STATUS.todo;
-      row.innerHTML = `
-        <input type="checkbox" class="chk" ${t.status==='done'?'checked':''} data-chk="${ti}:${realIdx}">
+      const j=tk.tasks.indexOf(t); const st=STATUS[t.status]||STATUS.todo;
+      const sc=sched[t.id]||{start:parseStart(),end:parseStart()};
+      const dateLabel=t.continuous? ('a partir de '+fmt(sc.start)) : fmtRange(sc.start,sc.end);
+      const durLabel=t.continuous?'contínuo':((parseInt(t.dur)||0)+ ((parseInt(t.dur)||0)===1?' dia':' dias'));
+      const row=document.createElement('div'); row.className='task'+(t.status==='done'?' done':'');
+      row.innerHTML=`
+        <input type="checkbox" class="chk" ${t.status==='done'?'checked':''} data-chk="${ti}:${j}">
         <div class="t-body">
-          <span class="t-title" contenteditable spellcheck="false" data-edit="task-title" data-ti="${ti}" data-tj="${realIdx}">${esc(t.title)}</span>
+          <span class="t-title" contenteditable spellcheck="false" data-edit="task-title" data-ti="${ti}" data-tj="${j}">${esc(t.title)}</span>
           <div class="t-meta">
-            <button class="status ${st.cls}" data-status="${ti}:${realIdx}">${st.label}</button>
-            <span class="pill owner" contenteditable spellcheck="false" data-edit="task-owner" data-ti="${ti}" data-tj="${realIdx}">${esc(t.owner||'—')}</span>
-            <span class="pill dur" contenteditable spellcheck="false" data-edit="task-dur" data-ti="${ti}" data-tj="${realIdx}">${esc(t.dur||'—')}</span>
-            <span class="pill dep" contenteditable spellcheck="false" data-edit="task-dep" data-ti="${ti}" data-tj="${realIdx}">${esc(t.dep||'—')}</span>
+            <button class="status ${st.cls}" data-status="${ti}:${j}">${st.label}</button>
+            <span class="pill date" title="Calculada automaticamente">${dateLabel}</span>
+            ${t.continuous?`<span class="pill dur">contínuo</span>`:`<span class="pill dur" contenteditable spellcheck="false" data-edit="task-dur" data-ti="${ti}" data-tj="${j}">${durLabel}</span>`}
+            <span class="pill owner" contenteditable spellcheck="false" data-edit="task-owner" data-ti="${ti}" data-tj="${j}">${esc(t.owner||'—')}</span>
           </div>
         </div>
-        <div class="t-actions">
-          <button class="icon-btn" title="Excluir" data-del="${ti}:${realIdx}">🗑</button>
-        </div>`;
+        <div class="t-actions"><button class="icon-btn" title="Excluir" data-del="${ti}:${j}">🗑</button></div>`;
       list.appendChild(row);
     });
     board.appendChild(div);
   });
+
+  const end=projectEnd(sched);
+  document.getElementById('launchHint').innerHTML=`🚀 <b>Lançamento estimado:</b> com o início e as durações atuais, o projeto termina por volta de <span class="end-pill">${fmt(end)} (${end.getFullYear()})</span>`;
   bind();
 }
 
-function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
 function bind(){
-  document.querySelectorAll('.chk').forEach(el=>el.onchange=()=>{
-    const [ti,tj]=el.dataset.chk.split(':').map(Number);
-    data.tracks[ti].tasks[tj].status = el.checked?'done':'todo'; save();
-  });
-  document.querySelectorAll('.status').forEach(el=>el.onclick=()=>{
-    const [ti,tj]=el.dataset.status.split(':').map(Number);
-    const cur=data.tracks[ti].tasks[tj].status;
-    const next=STATUS_CYCLE[(STATUS_CYCLE.indexOf(cur)+1)%STATUS_CYCLE.length];
-    data.tracks[ti].tasks[tj].status=next; save();
-  });
-  document.querySelectorAll('[data-del]').forEach(el=>el.onclick=()=>{
-    const [ti,tj]=el.dataset.del.split(':').map(Number);
-    if(confirm('Excluir esta tarefa?')){ data.tracks[ti].tasks.splice(tj,1); save(); }
-  });
-  document.querySelectorAll('[data-add]').forEach(el=>el.onclick=()=>{
-    const ti=+el.dataset.add;
-    data.tracks[ti].tasks.push({id:uid(),title:'Nova tarefa',owner:'',dur:'',dep:'—',status:'todo'});
-    save();
-  });
+  document.querySelectorAll('.chk').forEach(el=>el.onchange=()=>{const[a,b]=el.dataset.chk.split(':').map(Number);data.tracks[a].tasks[b].status=el.checked?'done':'todo';save();});
+  document.querySelectorAll('.status').forEach(el=>el.onclick=()=>{const[a,b]=el.dataset.status.split(':').map(Number);const cur=data.tracks[a].tasks[b].status;data.tracks[a].tasks[b].status=CYCLE[(CYCLE.indexOf(cur)+1)%CYCLE.length];save();});
+  document.querySelectorAll('[data-del]').forEach(el=>el.onclick=()=>{const[a,b]=el.dataset.del.split(':').map(Number);if(confirm('Excluir esta tarefa?')){data.tracks[a].tasks.splice(b,1);save();}});
+  document.querySelectorAll('[data-add]').forEach(el=>el.onclick=()=>{const a=+el.dataset.add;data.tracks[a].tasks.push({id:uid(),title:'Nova tarefa',owner:'',dur:1,deps:[],status:'todo'});save();});
   document.querySelectorAll('[data-edit]').forEach(el=>{
-    el.onblur=()=>{
-      const v=el.textContent.trim();
-      const ti=+el.dataset.ti, tj=+el.dataset.tj;
-      const k=el.dataset.edit;
-      if(k==='track-title')data.tracks[ti].title=v;
-      else if(k==='track-tag')data.tracks[ti].tag=v;
-      else if(k==='track-note')data.tracks[ti].note=v;
-      else if(k==='task-title')data.tracks[ti].tasks[tj].title=v;
-      else if(k==='task-owner')data.tracks[ti].tasks[tj].owner=v==='—'?'':v;
-      else if(k==='task-dur')data.tracks[ti].tasks[tj].dur=v==='—'?'':v;
-      else if(k==='task-dep')data.tracks[ti].tasks[tj].dep=v;
+    el.onblur=()=>{ const v=el.textContent.trim(); const a=+el.dataset.ti,b=+el.dataset.tj,k=el.dataset.edit;
+      if(k==='track-title')data.tracks[a].title=v;
+      else if(k==='track-tag')data.tracks[a].tag=v;
+      else if(k==='track-note')data.tracks[a].note=v;
+      else if(k==='task-title')data.tracks[a].tasks[b].title=v;
+      else if(k==='task-owner')data.tracks[a].tasks[b].owner=(v==='—'?'':v);
+      else if(k==='task-dur'){ const n=parseInt(v.replace(/\D/g,''))||0; data.tracks[a].tasks[b].dur=n; }
       save();
     };
-    el.onkeydown=(e)=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); el.blur(); } };
+    el.onkeydown=(e)=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();el.blur();} };
   });
 }
 
+document.getElementById('startDate').onchange=(e)=>{ data.start=e.target.value; save(); };
 document.getElementById('ownerFilter').onchange=()=>render();
-document.getElementById('btnAddTrack').onclick=()=>{
-  data.tracks.push({id:uid(),type:'par',tag:'Nova',title:'Nova trilha',note:'Descrição da trilha.',tasks:[]});
-  save();
-};
-document.getElementById('btnReset').onclick=()=>{
-  if(confirm('Restaurar o board para o padrão? Suas alterações locais serão perdidas.')){
-    data=JSON.parse(JSON.stringify(DEFAULT)); save();
-  }
-};
-document.getElementById('btnExport').onclick=()=>{
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='board-mounjaro-'+new Date().toISOString().slice(0,10)+'.json';
-  a.click();
-};
+document.getElementById('btnAddTrack').onclick=()=>{data.tracks.push({id:uid(),type:'par',tag:'Nova',title:'Nova trilha',note:'Descrição.',tasks:[]});save();};
+document.getElementById('btnReset').onclick=()=>{ if(confirm('Restaurar o board para o padrão? Suas alterações locais serão perdidas.')){data=JSON.parse(JSON.stringify(DEFAULT));save();} };
+document.getElementById('btnExport').onclick=()=>{const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='board-mounjaro-'+new Date().toISOString().slice(0,10)+'.json';a.click();};
 document.getElementById('btnImport').onclick=()=>document.getElementById('fileInput').click();
-document.getElementById('fileInput').onchange=(e)=>{
-  const f=e.target.files[0]; if(!f)return;
-  const r=new FileReader();
-  r.onload=()=>{ try{ data=JSON.parse(r.result); save(); alert('Board importado com sucesso.'); }
-    catch(err){ alert('Arquivo inválido.'); } };
-  r.readAsText(f);
-  e.target.value='';
-};
+document.getElementById('fileInput').onchange=(e)=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{data=JSON.parse(r.result);save();alert('Board importado.');}catch(err){alert('Arquivo inválido.');}};r.readAsText(f);e.target.value='';};
 
 render();
 if(data.updated) flashSaved();
