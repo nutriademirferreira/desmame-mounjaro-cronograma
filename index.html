@@ -62,11 +62,30 @@
   .track-note{font-weight:300;color:#6b6658;font-size:.86rem;margin:4px 0 14px;cursor:text;border-radius:5px;padding:1px 4px}
   .track-note:focus{outline:2px solid var(--gold-soft);background:#fff}
 
-  .task{display:flex;align-items:center;gap:12px;padding:11px 8px;border-bottom:1px solid #efe7d6;border-radius:8px;transition:.12s}
+  .task{display:flex;flex-direction:column;padding:11px 8px;border-bottom:1px solid #efe7d6;border-radius:8px;transition:.12s}
   .task:hover{background:#faf6ec}
   .task:last-of-type{border-bottom:none}
-  .task.done{opacity:.6}
+  .task.done > .task-main{opacity:.6}
   .task.done .t-title{text-decoration:line-through;text-decoration-color:var(--gold)}
+  .task-main{display:flex;align-items:center;gap:10px}
+  .caret{background:none;border:none;cursor:pointer;color:var(--gold);font-size:.8rem;width:18px;flex-shrink:0;transition:.15s;padding:0;line-height:1}
+  .caret:hover{color:var(--sage)}
+  .caret .cnt{font-size:.66rem;color:#b3ac9c;margin-left:1px}
+  /* sub-tópicos */
+  .subwrap{margin:8px 0 4px 46px;border-left:2px solid var(--gold-soft);padding-left:14px}
+  .sub{display:flex;align-items:center;gap:9px;padding:5px 4px;border-radius:6px;transition:.1s}
+  .sub:hover{background:#f3eee1}
+  .sub-chk{appearance:none;width:16px;height:16px;border:2px solid var(--gold-soft);border-radius:5px;cursor:pointer;flex-shrink:0;position:relative}
+  .sub-chk:checked{background:var(--gold);border-color:var(--gold)}
+  .sub-chk:checked::after{content:'✓';color:#fff;position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+  .sub-text{flex:1;font-size:.88rem;font-weight:400;cursor:text;border-radius:5px;padding:1px 4px;color:#4a463e;min-width:30px}
+  .sub-text:focus{outline:2px solid var(--gold-soft);background:#fff}
+  .sub.done .sub-text{text-decoration:line-through;color:#a8a294}
+  .sub .del-sub{opacity:0;background:none;border:none;cursor:pointer;color:#b3ac9c;font-size:.85rem;padding:2px 4px;border-radius:5px}
+  .sub:hover .del-sub{opacity:1;color:#b3ac9c}
+  .sub .del-sub:hover{color:var(--crit)}
+  .add-sub{background:none;border:none;color:var(--gold);cursor:pointer;font-size:.82rem;font-weight:500;font-family:'Jost',sans-serif;padding:5px 4px;margin-top:2px}
+  .add-sub:hover{color:var(--sage)}
   .chk{appearance:none;width:21px;height:21px;border:2px solid var(--gold);border-radius:6px;cursor:pointer;flex-shrink:0;position:relative;transition:.15s}
   .chk:checked{background:var(--done);border-color:var(--done)}
   .chk:checked::after{content:'✓';color:#fff;position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
@@ -283,19 +302,35 @@ function render(){
       const sc=sched[t.id]||{start:parseStart(),end:parseStart()};
       const dateLabel=t.continuous? ('a partir de '+fmt(sc.start)) : fmtRange(sc.start,sc.end);
       const durLabel=t.continuous?'contínuo':((parseInt(t.dur)||0)+ ((parseInt(t.dur)||0)===1?' dia':' dias'));
+      const subs=t.subs||[]; const subDone=subs.filter(s=>s.done).length;
+      const caretLabel=t.open?'▾':'▸';
+      const cntLabel=subs.length?`<span class="cnt">${subDone}/${subs.length}</span>`:`<span class="cnt">+</span>`;
       const row=document.createElement('div'); row.className='task'+(t.status==='done'?' done':'');
+      let subsHtml='';
+      if(t.open){
+        subsHtml='<div class="subwrap">'+
+          subs.map((s,k)=>`<div class="sub${s.done?' done':''}">
+              <input type="checkbox" class="sub-chk" ${s.done?'checked':''} data-subchk="${ti}:${j}:${k}">
+              <span class="sub-text" contenteditable spellcheck="false" data-subedit="${ti}:${j}:${k}">${esc(s.text)}</span>
+              <button class="del-sub" title="Remover" data-subdel="${ti}:${j}:${k}">✕</button>
+            </div>`).join('')+
+          `<button class="add-sub" data-subadd="${ti}:${j}">+ adicionar tópico</button></div>`;
+      }
       row.innerHTML=`
-        <input type="checkbox" class="chk" ${t.status==='done'?'checked':''} data-chk="${ti}:${j}">
-        <div class="t-body">
-          <span class="t-title" contenteditable spellcheck="false" data-edit="task-title" data-ti="${ti}" data-tj="${j}">${esc(t.title)}</span>
-          <div class="t-meta">
-            <button class="status ${st.cls}" data-status="${ti}:${j}">${st.label}</button>
-            <span class="pill date" title="Calculada automaticamente">${dateLabel}</span>
-            ${t.continuous?`<span class="pill dur">contínuo</span>`:`<span class="pill dur" contenteditable spellcheck="false" data-edit="task-dur" data-ti="${ti}" data-tj="${j}">${durLabel}</span>`}
-            <span class="pill owner" contenteditable spellcheck="false" data-edit="task-owner" data-ti="${ti}" data-tj="${j}">${esc(t.owner||'—')}</span>
+        <div class="task-main">
+          <button class="caret" data-toggle="${ti}:${j}" title="Mostrar tópicos">${caretLabel}${cntLabel}</button>
+          <input type="checkbox" class="chk" ${t.status==='done'?'checked':''} data-chk="${ti}:${j}">
+          <div class="t-body">
+            <span class="t-title" contenteditable spellcheck="false" data-edit="task-title" data-ti="${ti}" data-tj="${j}">${esc(t.title)}</span>
+            <div class="t-meta">
+              <button class="status ${st.cls}" data-status="${ti}:${j}">${st.label}</button>
+              <span class="pill date" title="Calculada automaticamente">${dateLabel}</span>
+              ${t.continuous?`<span class="pill dur">contínuo</span>`:`<span class="pill dur" contenteditable spellcheck="false" data-edit="task-dur" data-ti="${ti}" data-tj="${j}">${durLabel}</span>`}
+              <span class="pill owner" contenteditable spellcheck="false" data-edit="task-owner" data-ti="${ti}" data-tj="${j}">${esc(t.owner||'—')}</span>
+            </div>
           </div>
-        </div>
-        <div class="t-actions"><button class="icon-btn" title="Excluir" data-del="${ti}:${j}">🗑</button></div>`;
+          <div class="t-actions"><button class="icon-btn" title="Excluir" data-del="${ti}:${j}">🗑</button></div>
+        </div>${subsHtml}`;
       list.appendChild(row);
     });
     board.appendChild(div);
@@ -306,11 +341,29 @@ function render(){
   bind();
 }
 
+function focusLastSub(a,b){
+  requestAnimationFrame(()=>{
+    const subs=data.tracks[a].tasks[b].subs||[];
+    const el=document.querySelector(`[data-subedit="${a}:${b}:${subs.length-1}"]`);
+    if(el){ el.focus(); const r=document.createRange(); r.selectNodeContents(el); r.collapse(false);
+      const sel=window.getSelection(); sel.removeAllRanges(); sel.addRange(r); }
+  });
+}
 function bind(){
   document.querySelectorAll('.chk').forEach(el=>el.onchange=()=>{const[a,b]=el.dataset.chk.split(':').map(Number);data.tracks[a].tasks[b].status=el.checked?'done':'todo';save();});
   document.querySelectorAll('.status').forEach(el=>el.onclick=()=>{const[a,b]=el.dataset.status.split(':').map(Number);const cur=data.tracks[a].tasks[b].status;data.tracks[a].tasks[b].status=CYCLE[(CYCLE.indexOf(cur)+1)%CYCLE.length];save();});
   document.querySelectorAll('[data-del]').forEach(el=>el.onclick=()=>{const[a,b]=el.dataset.del.split(':').map(Number);if(confirm('Excluir esta tarefa?')){data.tracks[a].tasks.splice(b,1);save();}});
-  document.querySelectorAll('[data-add]').forEach(el=>el.onclick=()=>{const a=+el.dataset.add;data.tracks[a].tasks.push({id:uid(),title:'Nova tarefa',owner:'',dur:1,deps:[],status:'todo'});save();});
+  document.querySelectorAll('[data-add]').forEach(el=>el.onclick=()=>{const a=+el.dataset.add;data.tracks[a].tasks.push({id:uid(),title:'Nova tarefa',owner:'',dur:1,deps:[],status:'todo',subs:[],open:false});save();});
+  // sub-tópicos
+  document.querySelectorAll('[data-toggle]').forEach(el=>el.onclick=()=>{const[a,b]=el.dataset.toggle.split(':').map(Number);const t=data.tracks[a].tasks[b];t.open=!t.open;if(t.open&&!t.subs)t.subs=[];save();});
+  document.querySelectorAll('[data-subadd]').forEach(el=>el.onclick=()=>{const[a,b]=el.dataset.subadd.split(':').map(Number);const t=data.tracks[a].tasks[b];(t.subs=t.subs||[]).push({id:uid(),text:'',done:false});t.open=true;save();focusLastSub(a,b);});
+  document.querySelectorAll('[data-subchk]').forEach(el=>el.onchange=()=>{const[a,b,c]=el.dataset.subchk.split(':').map(Number);data.tracks[a].tasks[b].subs[c].done=el.checked;save();});
+  document.querySelectorAll('[data-subdel]').forEach(el=>el.onclick=()=>{const[a,b,c]=el.dataset.subdel.split(':').map(Number);data.tracks[a].tasks[b].subs.splice(c,1);save();});
+  document.querySelectorAll('[data-subedit]').forEach(el=>{
+    el.onblur=()=>{const[a,b,c]=el.dataset.subedit.split(':').map(Number);data.tracks[a].tasks[b].subs[c].text=el.textContent.trim();save();};
+    el.onkeydown=(e)=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();el.blur();
+      const[a,b]=el.dataset.subedit.split(':').map(Number);const t=data.tracks[a].tasks[b];t.subs.push({id:uid(),text:'',done:false});save();focusLastSub(a,b);} };
+  });
   document.querySelectorAll('[data-edit]').forEach(el=>{
     el.onblur=()=>{ const v=el.textContent.trim(); const a=+el.dataset.ti,b=+el.dataset.tj,k=el.dataset.edit;
       if(k==='track-title')data.tracks[a].title=v;
